@@ -1,5 +1,5 @@
-export async function getMovieList(pageNumber: number = 1) {
-  const url = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${pageNumber}`;
+export async function getMovieList(listType: string, pageNumber: number = 1) {
+  const url = `https://api.themoviedb.org/3/movie/${listType}?language=en-US&page=${pageNumber}`;
 
   const options = {
     method: "GET",

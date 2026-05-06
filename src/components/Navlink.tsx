@@ -6,7 +6,7 @@ interface LinkProps {
   onclick?: () => void;
 }
 
-const NavLink: React.FC<LinkProps> = ({ children, link, onclick }) => {
+const NavLink = ({ children, link, onclick }: LinkProps) => {
   return (
     <a
       className="nav-link"

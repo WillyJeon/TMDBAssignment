@@ -5,7 +5,7 @@ import { IoPersonOutline } from "react-icons/io5";
 
 interface MovieDetailsProps {
   movieId: number;
-  original_title: string;
+  title: string;
   overview: string;
   poster_path: string;
   backdrop_path: string;
@@ -15,7 +15,7 @@ interface MovieDetailsProps {
   genres: {
     name: string;
   }[];
-  prodiction_companies: {
+  production_companies: {
     name: string;
   }[];
   production_countries: {
@@ -29,11 +29,6 @@ interface MovieCreditsProps {
     character: string;
     profile_path: string;
   }[];
-  crew: {
-    name: string;
-    job: string;
-    profile_path: string;
-  }[];
 }
 
 const MovieDetails = ({ setBg }: { setBg: (style: any) => void }) => {
@@ -45,19 +40,17 @@ const MovieDetails = ({ setBg }: { setBg: (style: any) => void }) => {
   const [movieCredits, setMovieCredits] = useState<MovieCreditsProps | null>(
     null,
   );
+
   const fetchMovieDetails = async () => {
     const details = await getMovieDetails(movieId);
-    setMovieDetails(details);
-    console.log(details);
-  };
-  const fetchMovieCredits = async () => {
     const credits = await getMovieCredits(movieId);
+    setMovieDetails(details);
     setMovieCredits(credits);
-    console.log(credits);
+    console.log(details);
+    //console.log(credits);
   };
   useEffect(() => {
     fetchMovieDetails();
-    fetchMovieCredits();
   }, [movieId]);
 
   useEffect(() => {
@@ -74,36 +67,48 @@ const MovieDetails = ({ setBg }: { setBg: (style: any) => void }) => {
   }, [movieDetails, setBg]);
 
   return (
-    <div className="details">
-      <div className="text-4xl font-bold underline text-center">
-        {movieDetails?.original_title}
+    <div className="details font-bold">
+      <div className="text-4xl underline text-center">
+        {movieDetails?.title}
       </div>
-      <div className="text-2xl font-bold text-center">
-        {movieDetails?.tagline}
-      </div>
+      <div className="text-2xl text-center p-2">{movieDetails?.tagline}</div>
       <div className="flex flex-col md:flex-row gap-4">
         <img
           className="poster"
           src={"https://image.tmdb.org/t/p/w500/" + movieDetails?.poster_path}
-          alt={movieDetails?.original_title}
+          alt={movieDetails?.title}
         />
         <div className="information">
+          <div className="section">Genres</div>
           <div className="genres">
             {movieDetails?.genres.map((genre) => (
-              <div key={genre.name}>{genre.name}</div>
+              <div className="genre" key={genre.name}>
+                {genre.name}
+              </div>
             ))}
           </div>
-
+          <div className="section">Overview</div>
           <div className="overview">{movieDetails?.overview}</div>
-          <div className="text-sm font-light">
-            Release Date: {movieDetails?.release_date}
+          <div className="section">Release Date</div>
+          <div>{movieDetails?.release_date}</div>
+          <div className="section">Production Companies</div>
+          <div>
+            {movieDetails?.production_companies.map((company) => (
+              <div key={company.name}>{company.name}</div>
+            ))}
+          </div>
+          <div className="section">Production Countries</div>
+          <div>
+            {movieDetails?.production_countries.map((country) => (
+              <div key={country.name}>{country.name}</div>
+            ))}
           </div>
         </div>
       </div>
-      <div className="text-2xl font-bold underline">Cast</div>
+      <div className="section">Cast</div>
       <div className="actors">
         {movieCredits?.cast.map((actor) => (
-          <div className="actor text-[#28262b]" key={actor.name}>
+          <div className="actor " key={actor.name}>
             {actor.profile_path ? (
               <img
                 src={"https://image.tmdb.org/t/p/w500/" + actor.profile_path}
@@ -113,8 +118,8 @@ const MovieDetails = ({ setBg }: { setBg: (style: any) => void }) => {
               <IoPersonOutline className="w-24 h-24" />
             )}
             <div className="names">
-              <div className="text-lg font-bold">{actor.name}</div>
-              <div className="text-md">{actor.character}</div>
+              <div className="text-lg">{actor.name}</div>
+              <div className="text-md font-semibold">{actor.character}</div>
             </div>
           </div>
         ))}
