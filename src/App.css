@@ -14,10 +14,10 @@ TEXT Dark: #28262b
 }
 .movie {
   @apply flex flex-col items-center p-4
-  text-center;
+  text-center transition duration-300;
 }
 .movie :hover {
-  @apply drop-shadow-2xl shadow-[#28262b] transition duration-300;
+  @apply drop-shadow-2xl shadow-[#28262b] rounded-xl ring-1 transition duration-300;
 }
 
 /*NAVBAR*/
