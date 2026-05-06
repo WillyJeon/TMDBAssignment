@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getMovieList } from "../modules/movieService";
+import MoviePanel from "./MoviePanel";
 
 const MovieList = () => {
   const [movies, setMovies] = useState([]);
@@ -13,10 +14,18 @@ const MovieList = () => {
   }, []);
   return (
     <div>
-      <h2>Popular Movies</h2>
-      <ul>
+      <h2 className="text-4xl font-bold text-center">Popular Movies</h2>
+      <ul className="movies">
         {movies.map((movie: any) => (
-          <li key={movie.id}>{movie.title}</li>
+          <li className="movie" key={movie.id}>
+            <MoviePanel
+              id={movie.id}
+              title={movie.title}
+              posterPath={
+                "https://image.tmdb.org/t/p/w500/" + movie.poster_path
+              }
+            />
+          </li>
         ))}
       </ul>
     </div>
