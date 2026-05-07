@@ -35,7 +35,7 @@ function App() {
             path="/movie/:id"
             element={<MovieDetails setBg={setBgStyle} />}
           />
-          <Route path="*" element={<Navigate replace to="/" />} />
+          <Route path="*" element={<Navigate replace to="/popular" />} />
         </Routes>
       </div>
     </BrowserRouter>
